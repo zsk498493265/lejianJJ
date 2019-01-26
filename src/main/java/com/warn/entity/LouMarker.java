@@ -1,5 +1,7 @@
 package com.warn.entity;
 
+import java.util.List;
+
 /**
  * 楼标注
  * Created by netlab606 on 2017/9/2.
@@ -19,6 +21,8 @@ public class LouMarker {
     private Integer greenSum;//绿色人数 正常
     private Integer yellowSum;//黄色人数 正在接受服务
     private Integer redSum;////红色人数 预警
+
+    private List<OldMan> oldMan;
 
     public Integer getId() {
         return id;
@@ -114,5 +118,13 @@ public class LouMarker {
 
     public void setInfo(String info) {
         this.info = info;
+    }
+
+    public List<OldMan> getOldMan() {
+        return oldMan;
+    }
+
+    public void setOldMan(List<OldMan> oldMan) {
+        this.oldMan = oldMan;
     }
 }

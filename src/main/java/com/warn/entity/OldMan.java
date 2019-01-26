@@ -25,6 +25,8 @@ public class OldMan {
     private JieDaoMarker jieDaoMarker;//所在街道
     private LouMarker louMarker;//所在楼
     private String mapAddress;//区-街道-楼
+    private String oldQQ;
+    private String oldPwd;
 
     public OldMan() {
     }
@@ -143,6 +145,22 @@ public class OldMan {
 
     public void setLouMarker(LouMarker louMarker) {
         this.louMarker = louMarker;
+    }
+
+    public String getOldQQ() {
+        return oldQQ;
+    }
+
+    public void setOldQQ(String oldQQ) {
+        this.oldQQ = oldQQ;
+    }
+
+    public String getOldPwd() {
+        return oldPwd;
+    }
+
+    public void setOldPwd(String oldPwd) {
+        this.oldPwd = oldPwd;
     }
 
     //重写equals hashcode 不然获得不了以oldman为键的map的值
