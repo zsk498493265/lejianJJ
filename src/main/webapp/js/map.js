@@ -58,21 +58,25 @@ map.addEventListener("zoomend", function(){
         //清空覆盖物
         map.clearOverlays();
         getQuMarkers();
+        getWorkerMarkers();
     }else if((this.getZoom()==14||this.getZoom()==15||this.getZoom()==16)&&preZoom!=14&&preZoom!=15&&preZoom!=16){
         // console.log(point);
         //清空覆盖物
         map.clearOverlays();
         //街道级别 且 上一个地图级别不是街道级别
         getJieDaoMarkers();
+        getWorkerMarkers();
     }else if((this.getZoom()>=17&&this.getZoom()<=18)&&(preZoom<17||preZoom>18)){
         //清空覆盖物
         map.clearOverlays();
         //房屋级别 且 上一个地图级别不是房屋级别   没有label
         getLouMarkers();
+        getWorkerMarkers();
     }else if(this.getZoom()==19){
         map.clearOverlays();
          //房屋级别 且 上一个地图级别不是房屋级别   有label
         getLouMarkers_label();
+        getWorkerMarkers();
     }
     preZoom=this.getZoom();
 });
