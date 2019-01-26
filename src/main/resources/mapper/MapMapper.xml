@@ -207,4 +207,15 @@
             limit #{page.start},#{page.rows}
         </if>
     </select>
+    
+    <select id="getWorkerMarkers" resultType="com.warn.entity.WorkerMarker">
+        SELECT id, cx, cy, time
+        FROM worker x
+        WHERE time = (SELECT max(time) FROM worker y WHERE x.id=y.id);
+    </select>
+
+    <select id="getWorkerPosition" resultType="com.warn.entity.WorkerMarker">
+        SELECT id, cx, cy, time
+        FROM worker WHERE id = #{id} ORDER BY time
+    </select>
 </mapper>
