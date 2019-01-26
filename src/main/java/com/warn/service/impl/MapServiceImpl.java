@@ -137,4 +137,14 @@ public class MapServiceImpl implements MapService {
         page.setStart((page.getPage() - 1) * page.getRows());
         return mapDao.getJieDaoMarkersManager(page,jieDaoMarker);
     }
+    
+    @Override
+    public List<WorkerMarker> getWorkerMarkers() {
+        return mapDao.getWorkerMarkers();
+    }
+
+    @Override
+    public List<WorkerMarker> getWorkerPosition(Integer wkid) {
+        return mapDao.getWorkerPosition(wkid);
+    }
 }
