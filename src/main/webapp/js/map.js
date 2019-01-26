@@ -38,10 +38,13 @@ if(getCookie("zoom")!=null&&getCookie("zoom")!=""){
     // map.centerAndZoom(new BMap.Point(121.481, 31.238), getCookie("zoom"));
     if(getCookie("zoom")>=16&&getCookie("zoom")<=18){
         getLouMarkers();
+        getWorkerMarkers();
     }else if(getCookie("zoom")==19){
         getLouMarkers_label();
+        getWorkerMarkers();
     }else{
         getJieDaoMarkers();
+        getWorkerMarkers();
     }
 }else {
     map.centerAndZoom(new BMap.Point(121.481, 31.238), 13);
@@ -187,6 +190,7 @@ function init(){
     //默认地图级别12  显示区 统计信息
     getQuMarkers();//区
     getSums();//统计信息
+    getWorkerMarkers();//服务人员位置
     // divInit();
 }
 
@@ -399,6 +403,54 @@ function getSums() {
             }
             // alert(JSON.stringify(Sum));
             divInit();
+        }
+    });
+}
+
+function getWorkerMarkers() {
+    $.ajax({
+        type: "GET",
+        url: pathJs + "/map/getWorkerMarkers",
+        dataType: "json",
+        async: false,
+        success: function (data) {
+            for(var i=0;i<data.data.length;i++) {
+                var icon = BMapLib.MarkerTool.SYS_ICONS[6];
+                var point = new BMap.Point(data.data[i].cx, data.data[i].cy);
+                var marker = new BMap.Marker(point, {icon: icon});
+                marker.setTitle(data.data[i].id);
+                map.addOverlay(marker);
+                marker.addEventListener("click", function (){
+                    // now_id = this.getTitle();
+                    // draw_path();
+                    $.ajax({
+                        type: "GET",
+                        url: pathJs + "/map/" + this.getTitle() + "/getWorkerPosition",
+                        dataType: "json",
+                        async: false,
+                        success: function (data1) {
+                            var runLine = [];
+                            for(var j = 0; j < data1.data.length; j++)
+                                runLine.push(new BMap.Point(data1.data[j].cx, data1.data[j].cy));
+                            var path = new BMap.Polyline(runLine,{
+                                strokeColor : "#009933", //线路颜色
+                                strokeWeight : 4,//线路大小
+                                //线路类型(虚线)
+                                strokeStyle : "dashed"});
+                            map.addOverlay(path);
+                            var icon = BMapLib.MarkerTool.SYS_ICONS[6];
+                            var point = new BMap.Point(data1.data[data1.data.length-1].cx, data1.data[data1.data.length-1].cy);
+                            var marker = new BMap.Marker(point, {icon: icon});
+                            // marker.setTitle(data1.data[data1.data.length-1].time);
+                            map.addOverlay(marker);
+                            setInterval(louChange, 60000);      //每60s刷新一次
+                            // setInterval("draw_path()", 100);
+                        }
+                    });
+
+                });
+
+            }
         }
     });
 }
