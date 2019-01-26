@@ -6,6 +6,7 @@ import com.warn.entity.HouseMarker;
 import com.warn.entity.JieDaoMarker;
 import com.warn.entity.LouMarker;
 import com.warn.entity.QuMarker;
+import com.warn.entity.WorkerMarker;
 import org.apache.ibatis.annotations.Param;
 
 
@@ -58,4 +59,8 @@ public interface MapDao {
     Long getJieDaoMarkersTotal(JieDaoMarker jieDaoMarker);
 
     List<JieDaoMarker> getJieDaoMarkersManager(@Param("page")PageHelper page,@Param("jie") JieDaoMarker jieDaoMarker);
+    
+    List<WorkerMarker> getWorkerMarkers();
+
+    List<WorkerMarker> getWorkerPosition(@Param("id") Integer wkid);
 }
