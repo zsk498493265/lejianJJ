@@ -43,4 +43,8 @@ public interface MapService {
     Long getJieDaoMarkersTotal(JieDaoMarker jieDaoMarker);
 
     List<JieDaoMarker> getJieDaoMarkersManager(PageHelper page, JieDaoMarker jieDaoMarker);
+    
+    List<WorkerMarker> getWorkerMarkers();
+
+    List<WorkerMarker> getWorkerPosition(Integer wkid);
 }
