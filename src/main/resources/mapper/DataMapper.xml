@@ -11,6 +11,7 @@
         <result property="oldPhone" column="oldPhone"/>
         <result property="oldAddress" column="oldAddress"/>
         <result property="oldRegtime" column="oldRegtime"/>
+        <result property="status" column="status"/>
         <result property="oldQQ" column="oldQQ"/>
         <result property="oldPwd" column="oldPwd"/>
         <association property="relatives" javaType="com.warn.entity.Relatives">
@@ -116,7 +117,7 @@
 
     <select id="datagridUserMap" resultMap="resultOldMan">
         select
-        old.oid,old.oldName,q.id qid,q.qName,j.id jid,j.jName,l.id lid,l.info,old.oldQQ,old.oldPwd
+        old.oid,old.oldName,q.id qid,q.qName,j.id jid,j.jName,l.id lid,l.info,old.oldQQ,old.oldPwd,old.status
         FROM oldman old left join marker_lou l on old.louId=l.id left join marker_street j on j.id=l.jid left join marker_district q on q.id=j.qid
         <if test="oldMan.oid != null and oldMan.oid != ''">
             and oid=#{oldMan.oid}

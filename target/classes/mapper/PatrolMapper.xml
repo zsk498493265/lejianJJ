@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.warn.dao.PatrolDao">
+
+    <insert id="addPatrolRecords">
+        INSERT INTO xun_geng(worker,point,card_no,machine_name,machine_no,time) VALUES (#{worker},#{point},#{cardNo},#{machineName},#{machineNo},#{time})
+    </insert>
+
+    <select id="getCookie" resultType="com.warn.entity.Cookie">
+        Select * from cookie
+    </select>
+
+    <select id="getLatestRecord" resultType="com.warn.entity.Patrol">
+        select worker,point,card_no,machine_name,machine_no,time from xun_geng
+        order by id DESC
+        limit 1
+    </select>
+</mapper>
