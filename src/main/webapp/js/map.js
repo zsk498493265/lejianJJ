@@ -686,10 +686,10 @@ function getLouMarkers() {
                         infostr=infostr+"手机："+olds[j].oldPhone+",";
                         infostr=infostr+"密码："+olds[j].oldPwd;
                         infostr+="<Button onclick='f1()'>实时通讯</Button>";
-                        infostr+="<button onclick='exec()'>btn1</button>";
+                        infostr+="<button onclick='exec()'>查看室内情况</button>";
                         infostr+="<br/>"
                     }
-                    alert(infostr);
+                    //alert(infostr);
                     //alert(olds.length);
                     // for(var i=0;i<Sum.district.length;i++) {
                     //     for(var j=0;j<Sum.district[i].street.length;j++) {
