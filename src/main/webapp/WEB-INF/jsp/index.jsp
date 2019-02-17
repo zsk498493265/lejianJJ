@@ -21,7 +21,6 @@
 <head>
     <meta charset="utf-8">
     <title>长者关怀</title>
-    <Button onclick="exec('d:\\EzvizStudio\\EzvizStudio.exe')">test</button>
     <link rel="shortcut icon" href="${path}/images/title.ico">
     <link rel="stylesheet" href="${path}/css/bootstrap.min.css">
     <link rel="stylesheet" href="${path}/css/index.css">
@@ -143,23 +142,7 @@
         <%--</div>--%>
     <%--</nav>--%>
 </div>
-<script>
-    function exec (command) {
-        window.oldOnError = window.onerror;
-        window._command = command;
-        window.onerror = function (err) {
-            if (err.indexOf('automation' ) != -1) {
-                alert('命令已经被用户禁止！');
-                return true;
-            }
-            else return false;
-        };
-        var wsh = new ActiveXObject('WScript.Shell');
-        if (wsh)
-            wsh.Run(command);
-        window.onerror = window.oldOnError;
-    }
-</script>
+
 <script src="${path}/js/jquery.min.js"></script>
 <script src="${path}/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${path}/easyUI_insdep/jquery.easyui.min.js"></script>

@@ -83,6 +83,13 @@ public class MapController {
         return new Result(true, louMarkerList);
     }
 
+    @ResponseBody
+    @RequestMapping(value ="/getLouMarkersAndOlds",method = RequestMethod.GET)
+    public Result getLouAndOld(){
+        List<LouMarker> louMarkerList =  mapService.getLousAndOlds();
+        return new Result(true,louMarkerList);
+    }
+
     /**
      * 获得楼标注  POST
      * @return

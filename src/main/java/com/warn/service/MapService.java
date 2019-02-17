@@ -26,6 +26,8 @@ public interface MapService {
 
     List<LouMarker> getLouMarkers();
 
+    List<LouMarker> getLousAndOlds();
+
     void addLouMarker(LouMarker louMarker);
 
     List<JieDaoMarker> getJieDaoMarkersByQid(Integer qid);
