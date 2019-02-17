@@ -17,6 +17,9 @@
   <script src="https://img.hcharts.cn/highcharts/modules/exporting.js"></script>
   <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
 
+  <script type="text/javascript" src="${path}/js/table_oldman.js"></script>
+  <script type="text/javascript" src="${path}/js/common.js"></script>
+
 <style type="text/css">
 
 
@@ -97,8 +100,8 @@
       <p id="yellowNum">正在接受服务老人数量：0</p>
       <p id="redNum">未接受服务老人数量：1</p>
     </div>
-    <div id='test' style='width:500px;height:200px;background:#aa00aa;'>
-      <table id="datagrid" class="easyui-datagrid" fit="true" url="/data/datagrid" title="人员信息"
+    <div id='test' style='width:500px;height:500px;background:#aa00aa;'>
+      <table id="datagrid2" class="easyui-datagrid" fit="true" url="${path}/data/datagrid" title=""
              toolbar="#toolbar"
              pagination="true"
              fitColumns="true"
@@ -109,17 +112,9 @@
              nowrap="false">
         <thead>
         <tr>
-          <th data-options="field:'oid',width:fixWidth(0.05),align:'center'" rowspan="2">人员ID</th>
           <th data-options="field:'oldName',width:fixWidth(0.05),align:'center'" rowspan="2">姓名</th>
-          <th data-options="field:'gatewayID',width:fixWidth(0.08),align:'center',formatter:formatActionGateway" rowspan="2">网关</th>
-          <th data-options="field:'segment',width:fixWidth(0.08),align:'center',formatter:formatActionSegment" rowspan="2">网段标识</th>
           <th data-options="field:'oldPhone',width:fixWidth(0.08),align:'center'" rowspan="2">电话</th>
           <th data-options="field:'oldAddress',width:fixWidth(0.11),align:'center'" rowspan="2">住址</th>
-          <th data-options="field:'oldRegtime',width:fixWidth(0.08),align:'center'" rowspan="2">注册时间</th>
-          <th data-options="field:'rooms',width:fixWidth(0.052),align:'center',formatter:formatActionRoom" rowspan="2">房间</th>
-          <th data-options="field:'equips',width:fixWidth(0.052),align:'center',formatter:formatActionEquip" rowspan="2">设备</th>
-          <th data-options="field:'relid',hidden:true,formatter: function(value,row,index){if (row.relatives.relid){return row.relatives.relid;} else {return '';}}">紧急联系人ID</th>
-          <th colspan="4">紧急联系人</th>
         </tr>
         <tr>
           <th data-options="field:'rName',width:fixWidth(0.08),align:'center',
@@ -129,7 +124,7 @@
                 } else {
                     return '';
                 }
-           }">姓名</th>
+           }"></th>
           <th data-options="field:'rPhone',width:fixWidth(0.08),align:'center',
       formatter: function(value,row,index){
                 if (row.relatives.rPhone){
@@ -137,7 +132,7 @@
                 } else {
                     return '';
                 }
-           }">电话</th>
+           }"></th>
           <th data-options="field:'rAddress',width:fixWidth(0.11),align:'center',
       formatter: function(value,row,index){
                 if (row.relatives.rAddress){
@@ -145,15 +140,7 @@
                 } else {
                     return '';
                 }
-           }">住址</th>
-          <th data-options="field:'oldId',hidden:true,
-      formatter: function(value,row,index){
-                if (row.relatives.oldId){
-                    return row.relatives.oldId;
-                } else {
-                    return '';
-                }
-           }">紧急联系人对应网关ID</th>
+           }"></th>
         </tr>
         </thead>
       </table>
