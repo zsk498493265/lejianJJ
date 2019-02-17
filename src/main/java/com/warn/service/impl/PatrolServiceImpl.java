@@ -18,6 +18,11 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Service
 public class PatrolServiceImpl implements PatrolService {
 
@@ -105,6 +110,22 @@ public class PatrolServiceImpl implements PatrolService {
             }
 
 
+    }
+
+    public List<Integer> getOldIds(){
+        List<Patrol> patrols = patrolDao.getAllRecords();
+        Set<Integer> points = new HashSet<>();
+        List<Integer> oldIds = new ArrayList<>();
+        for(Patrol patrol:patrols){
+            Integer point  = Integer.parseInt(patrol.getPoint());
+            points.add(point);
+        }
+        for(Integer point:points)
+        {
+            Integer id = patrolDao.getOldIdByRecord(point);
+            oldIds.add(id);
+        }
+        return oldIds;
     }
     }
 

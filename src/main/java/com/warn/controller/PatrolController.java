@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequestMapping("/patrol")
@@ -22,5 +23,13 @@ public class PatrolController {
         patrolService.addPatrolRecords();
         return new Result(true);
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/getOldIds",method = RequestMethod.GET)
+    public Result getOldIds(){
+        List<Integer> oldIds =  patrolService.getOldIds();
+         return new Result(true,oldIds);
+    }
+
 
 }
