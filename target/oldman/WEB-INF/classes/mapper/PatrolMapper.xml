@@ -15,4 +15,14 @@
         order by id DESC
         limit 1
     </select>
+
+    <select id="getAllRecords" resultType="com.warn.entity.Patrol">
+        select * from xun_geng
+        where 1 = 1;
+    </select>
+
+    <select id="getOldIdByRecord" resultType="java.lang.Integer">
+        SELECT old_id from point_to_oldman
+        where point = #{point}
+    </select>
 </mapper>
