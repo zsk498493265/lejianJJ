@@ -50,7 +50,7 @@ public class DataController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value="/datagrid", method = RequestMethod.POST)
+    @RequestMapping(value="/datagrid", method = RequestMethod.GET)
     public DataGrid datagrid(PageHelper page,OldMan oldMan) {
         DataGrid dg = new DataGrid();
         dg.setTotal(dataService.getDatagridTotal(oldMan));

@@ -16,6 +16,7 @@
   <script src="https://img.hcharts.cn/highcharts/highcharts-3d.js"></script>
   <script src="https://img.hcharts.cn/highcharts/modules/exporting.js"></script>
   <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
+
 <style type="text/css">
 
 
@@ -92,12 +93,12 @@
     </div>
     <div id='test' style='width:500px;height:200px;background:#00ee00;'>
       测试的div2<br>
-        已接受服务老人数量：1<br>
-        正在接受服务老人数量：0<br>
-        未接受服务老人数量：1<br>
+      <p id="greenNum">已接受服务老人数量：1</p>
+      <p id="yellowNum">正在接受服务老人数量：0</p>
+      <p id="redNum">未接受服务老人数量：1</p>
     </div>
     <div id='test' style='width:500px;height:200px;background:#aa00aa;'>
-      <table id="datagrid" class="easyui-datagrid" fit="true" url="${path}/data/datagrid" title="人员信息"
+      <table id="datagrid" class="easyui-datagrid" fit="true" url="/data/datagrid" title="人员信息"
              toolbar="#toolbar"
              pagination="true"
              fitColumns="true"

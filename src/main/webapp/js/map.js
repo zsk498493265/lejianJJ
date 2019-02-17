@@ -28,7 +28,32 @@ var selectStreet=[];//存储添加标注时  街道的选择  实时更新
 var selectDistrict=[];//存储添加标注时  区的选择  实时更新
 // var selectOldMan=[];//存储添加标注时  人员的选择  实时更新
 
+//老人信息表格内容填充
+var greenNum=0,redNum=0,yellowNum=0;
+$.ajax({
+    type: "GET",
+    // url: pathJs + "/map/getLouMarkersAndOlds",
+    url: "/map/getLouMarkersAndOlds",
+    dataType: "json",
+    async: false,
+    success: function (data) {
 
+        for (var i = 0; i < data.data.length; i++) {
+            for (var j = 0; j < data.data[i].oldMan.length; j++) {
+                if (data.data[i].oldMan[j].status == 0)
+                    greenNum++;
+                else if (data.data[i].oldMan[j].status == 1)
+                    yellowNum++;
+                else if (data.data[i].oldMan[j].status == 2)
+                    redNum++;
+            }
+        }
+        document.getElementById("greenNum").innerText = "已接受服务老人数量：" + greenNum;
+        document.getElementById("redNum").innerText = "未接受服务老人数量：" + redNum;
+        document.getElementById("yellowNum").innerText = "正在接受服务老人数量：" + yellowNum;
+    }
+});
+//
 
 var map = new BMap.Map("container");
 map.setMapStyle({style:'googlelite'});
@@ -74,7 +99,7 @@ map.addEventListener("zoomend", function(){
         getWorkerMarkers();
     }else if(this.getZoom()==19){
         map.clearOverlays();
-         //房屋级别 且 上一个地图级别不是房屋级别   有label
+        //房屋级别 且 上一个地图级别不是房屋级别   有label
         getLouMarkers_label();
         getWorkerMarkers();
     }
@@ -495,10 +520,10 @@ function getQuMarkers() {
                     var qName=this.getTitle().split("：")[1];
 
                     var opts = {
-                            width : 200,     // 信息窗口宽度
-                            height: 100,     // 信息窗口高度
-                            title : this.getTitle()  // 信息窗口标题
-                        };
+                        width : 200,     // 信息窗口宽度
+                        height: 100,     // 信息窗口高度
+                        title : this.getTitle()  // 信息窗口标题
+                    };
                     //该区的统计情况  不能用data.data[i] 因为只有触发的时候才会渲染  触发时 data.data[i]是null
                     // var sums=this.getAttribute("sum").split("@");
                     // alert(JSON.stringify(Sum));
@@ -614,28 +639,35 @@ function getJieDaoMarkers() {
 function getLouMarkers() {
     $.ajax({
         type: "GET",
-        url: pathJs + "/map/getLouMarkers",
+        // url: pathJs + "/map/getLouMarkersAndOlds",
+        url: "/map/getLouMarkersAndOlds",
         dataType: "json",
         async:false,
         success: function (data) {
 
             for(var i=0;i<data.data.length;i++) {
+                var dataR=data.data;
                 // if(data.data[i].greenSum!=0){
                 var icon = BMapLib.MarkerTool.SYS_ICONS[6];
                 var point = new BMap.Point(data.data[i].xG, data.data[i].yG);
                 var marker = new BMap.Marker(point, {icon: icon});
-                marker.setTitle(data.data[i].info + "："+data.data[i].greenSum);
+                var oldNum=data.data[i].greenSum+data.data[i].yellowSum+data.data[i].redSum;
+                marker.setTitle(data.data[i].info + "："+oldNum);
 
+                // if(typeof(data.data[i].oldMan)=="undefined")continue;
+
+                var len=dataR[i].oldMan.length,louName=dataR[i].info;
+                var olds=dataR[i].oldMan;
                 //new
                 marker.addEventListener("click", function (e) {
                     /**
                      *
-                     * 获得该街道的统计信息
+                     * 获得该楼道的统计信息
                      */
                         // alert(this.getTitle());
                     var opts = {
                             width : 200,     // 信息窗口宽度
-                            height: 130,     // 信息窗口高度
+                            height: 500,     // 信息窗口高度
                             title : this.getTitle()  // 信息窗口标题
                         };
                     var jName=this.getTitle().split("：")[1];
@@ -644,6 +676,21 @@ function getLouMarkers() {
                     var varGreenSum=1;
                     var varYellowSum=3;
                     var varRedSum=1;
+                    //alert(data.data[i].info);
+                    var infostr="楼名："+louName+"<br/>";
+
+                    for(var j=0;j<len;j++)
+                    {
+                        infostr+=olds[j].oldName;
+                        infostr=infostr+":"+olds[j].status+",";
+                        infostr=infostr+"手机："+olds[j].oldPhone+",";
+                        infostr=infostr+"密码："+olds[j].oldPwd;
+                        infostr+="<Button onclick='f1()'>实时通讯</Button>";
+                        infostr+="<button onclick='exec()'>btn1</button>";
+                        infostr+="<br/>"
+                    }
+                    alert(infostr);
+                    //alert(olds.length);
                     // for(var i=0;i<Sum.district.length;i++) {
                     //     for(var j=0;j<Sum.district[i].street.length;j++) {
                     //         if (Sum.district[i].street[j].name == jName) {
@@ -657,7 +704,9 @@ function getLouMarkers() {
                     // }
                     //该街道的统计情况
                     //var infoWindow = new BMap.InfoWindow("所属区："+varQname+"<br/>购买服务总人数："+varSum+"<br/>正常："+varGreenSum+"<br/>正在接受服务："+varYellowSum+"<br/>预警："+varRedSum,opts);  // 创建信息窗口对象
-                    var infoWindow = new BMap.InfoWindow("楼名："+varQname+"<br/>购买服务总人数：1<br/>老人1:<div id='test' style='width:10px;height:10px;background:#00ee00;'></div><button onclick='exec()'>btn1</button><Button onclick='f1()'>btn2</Button><br/>老人2:<div id='test' style='width:10px;height:10px;background:#dd1144;'></div><br/>",opts);  // 创建信息窗口对象
+                    // var infoWindow = new BMap.InfoWindow("楼名："+varQname+"<br/>购买服务总人数：1<br/>老人1:<div id='test' style='width:10px;height:10px;background:#00ee00;'></div><button onclick='exec()'>btn1</button><Button onclick='f1()'>btn2</Button><br/>老人2:<div id='test' style='width:10px;height:10px;background:#dd1144;'></div><br/>",opts);  // 创建信息窗口对象
+
+                    var infoWindow = new BMap.InfoWindow(infostr,opts);  // 创建信息窗口对象
 
                     this.openInfoWindow(infoWindow,new BMap.Point(this.point.lng,this.point.lat));
                 });
@@ -696,22 +745,23 @@ function getLouMarkers_label() {
         async:false,
         success: function (data) {
 
+
             for(var i=0;i<data.data.length;i++) {
                 // if(data.data[i].greenSum!=0){
-                    var icon = BMapLib.MarkerTool.SYS_ICONS[6];
-                    var point = new BMap.Point(data.data[i].xG, data.data[i].yG);
-                    var marker = new BMap.Marker(point, {icon: icon});
-                    marker.setTitle(data.data[i].info + "："+data.data[i].greenSum);
-                    map.addOverlay(marker);
-                    var label = new BMap.Label(data.data[i].greenSum,{offset:new BMap.Size(3,-18)});
-                    label.setStyle({
-                        color:"red",
-                        font:"8px Tahoma,Helvetica,Arial,'宋体',sans-serif;",
-                        backgroundColor:"transparent",
-                        fontWeight:"bold",
-                        border:"none"
-                    });
-                    marker.setLabel(label);
+                var icon = BMapLib.MarkerTool.SYS_ICONS[6];
+                var point = new BMap.Point(data.data[i].xG, data.data[i].yG);
+                var marker = new BMap.Marker(point, {icon: icon});
+                marker.setTitle(data.data[i].info + "："+data.data[i].greenSum);
+                map.addOverlay(marker);
+                var label = new BMap.Label(data.data[i].greenSum,{offset:new BMap.Size(3,-18)});
+                label.setStyle({
+                    color:"red",
+                    font:"8px Tahoma,Helvetica,Arial,'宋体',sans-serif;",
+                    backgroundColor:"transparent",
+                    fontWeight:"bold",
+                    border:"none"
+                });
+                marker.setLabel(label);
                 // }
                 if(data.data[i].yellowSum!=0){
                     var icon = BMapLib.MarkerTool.SYS_ICONS[9];
@@ -783,8 +833,8 @@ function divInit() {
                 detail: {formatter:'{value}',
                     textStyle: {
                         fontSize: 18
-                },
-                offsetCenter: [0, '15%']},
+                    },
+                    offsetCenter: [0, '15%']},
                 data: [{value: 30, name: '已入住人数'}]
             }
         ]
