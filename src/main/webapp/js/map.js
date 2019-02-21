@@ -64,9 +64,11 @@ $.ajax({
                     redNum++;
             }
         }
+        var tempAll=greenNum+redNum+yellowNum;
         document.getElementById("greenNum").innerText = "已接受服务老人数量：" + greenNum;
         document.getElementById("redNum").innerText = "未接受服务老人数量：" + redNum;
         document.getElementById("yellowNum").innerText = "正在接受服务老人数量：" + yellowNum;
+        document.getElementById("allNum").innerText = "老人总数：" + tempAll;
     }
 });
 //
@@ -717,7 +719,7 @@ function getLouMarkers() {
                         }
 
                         infostr=infostr+"手机："+olds[j].oldPhone+",";
-                        infostr=infostr+"密码："+olds[j].oldPwd;
+                        infostr=infostr+"密码："+olds[j].oldPwd+"<br/>";
                         infostr+="<Button onclick='f1()'>实时通讯</Button>";
                         infostr+="<button onclick='exec()'>查看室内情况</button>";
                         infostr+="<br/>"

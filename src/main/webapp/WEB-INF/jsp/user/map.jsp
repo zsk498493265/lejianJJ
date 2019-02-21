@@ -91,16 +91,17 @@
   <%--<div id="main_pie"></div>--%>
   <%--<div id="main_pie_2"></div>--%>
   <%--<div id="main_pie_3"></div>--%>
-    <div id='test' style='width:500px;height:200px;background:#00F;'>
-      测试的div1
-    </div>
-    <div id='test' style='width:500px;height:200px;background:#00ee00;'>
+    <%--<div id='test' style='width:500px;height:200px;background:#00F;'>--%>
+      <%--测试的div1--%>
+    <%--</div>--%>
+    <div id='test' style='width:500px;height:300px;background:#00ee00;'>
       测试的div2<br>
-      <p id="greenNum">已接受服务老人数量：1</p>
-      <p id="yellowNum">正在接受服务老人数量：0</p>
-      <p id="redNum">未接受服务老人数量：1</p>
+      <p id="greenNum" style="font-size: 20px">已接受服务老人数量：1</p>
+      <p id="yellowNum" style="font-size: 20px">正在接受服务老人数量：0</p>
+      <p id="redNum" style="font-size: 20px">未接受服务老人数量：1</p>
+      <p id="allNum" style="font-size: 20px">老人总数：1</p>
     </div>
-    <div id='test' style='width:500px;height:500px;background:#aa00aa;'>
+    <div id='test' style='width:500px;height:370px;background:#aa00aa;'>
       <table id="datagrid2" class="easyui-datagrid" fit="true" url="${path}/data/datagrid" title=""
              toolbar="#toolbar"
              pagination="true"
