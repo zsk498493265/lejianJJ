@@ -30,6 +30,22 @@ var selectDistrict=[];//存储添加标注时  区的选择  实时更新
 
 //老人信息表格内容填充
 var greenNum=0,redNum=0,yellowNum=0;
+var old_turn_green=new Array();
+$.ajax({
+    type: "GET",
+    url: "/patrol/getOldIds",
+    dataType: "json",
+    async: false,
+    success: function (data) {
+
+
+        for (var i = 0; i < data.data.length; i++) {
+            old_turn_green.push(data.data[i]);
+
+        }
+
+    }
+});
 $.ajax({
     type: "GET",
     // url: pathJs + "/map/getLouMarkersAndOlds",
@@ -636,6 +652,7 @@ function getJieDaoMarkers() {
 }
 
 //获得楼数据
+var olds,len,louName;
 function getLouMarkers() {
     $.ajax({
         type: "GET",
@@ -647,6 +664,7 @@ function getLouMarkers() {
 
             for(var i=0;i<data.data.length;i++) {
                 var dataR=data.data;
+
                 // if(data.data[i].greenSum!=0){
                 var icon = BMapLib.MarkerTool.SYS_ICONS[6];
                 var point = new BMap.Point(data.data[i].xG, data.data[i].yG);
@@ -656,10 +674,11 @@ function getLouMarkers() {
 
                 // if(typeof(data.data[i].oldMan)=="undefined")continue;
 
-                var len=dataR[i].oldMan.length,louName=dataR[i].info;
-                var olds=dataR[i].oldMan;
+                len=dataR[i].oldMan.length,louName=dataR[i].info;
+                olds=dataR[i].oldMan;
                 //new
                 marker.addEventListener("click", function (e) {
+                    console.log(dataR[i]);
                     /**
                      *
                      * 获得该楼道的统计信息
@@ -682,7 +701,21 @@ function getLouMarkers() {
                     for(var j=0;j<len;j++)
                     {
                         infostr+=olds[j].oldName;
-                        infostr=infostr+":"+olds[j].status+",";
+                        //infostr=infostr+":"+olds[j].status+",";
+                        if(isGreen(olds[j].oid)){
+                            infostr=infostr+":"+"<div id='test' style='width:10px;height:10px;background:#00ee00;'></div>";
+                            alert(olds[j].oid);
+                        }
+                        else
+                        {
+                            if(olds[j].status==0)
+                                infostr=infostr+":"+"<div id='test' style='width:10px;height:10px;background:#00ee00;'></div>";
+                            else if(olds[j].status==1)
+                                infostr=infostr+":"+"<div id='test' style='width:10px;height:10px;background:#FFFF00;'></div>";
+                            else if(olds[j].status==2)
+                                infostr=infostr+":"+"<div id='test' style='width:10px;height:10px;background:#dd1144;'></div>";
+                        }
+
                         infostr=infostr+"手机："+olds[j].oldPhone+",";
                         infostr=infostr+"密码："+olds[j].oldPwd;
                         infostr+="<Button onclick='f1()'>实时通讯</Button>";
@@ -736,6 +769,14 @@ function getLouMarkers() {
 }
 function f1(){
     window.location.href='tencent://Message/?uin=1091793549';
+}
+function isGreen(oid){
+    for(var i=0;i<old_turn_green.length;i++){
+        if(oid==old_turn_green[i]){
+            return 1;
+        }
+    }
+    return 0;
 }
 function getLouMarkers_label() {
     $.ajax({
