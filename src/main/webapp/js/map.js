@@ -704,9 +704,10 @@ function getLouMarkers() {
                     {
                         infostr+=olds[j].oldName;
                         //infostr=infostr+":"+olds[j].status+",";
+                        alert(isGreen(olds[j].oid));
                         if(isGreen(olds[j].oid)){
                             infostr=infostr+":"+"<div id='test' style='width:10px;height:10px;background:#00ee00;'></div>";
-                            alert(olds[j].oid);
+
                         }
                         else
                         {
