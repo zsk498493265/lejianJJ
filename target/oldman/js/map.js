@@ -672,7 +672,7 @@ function getLouMarkers() {
                 var point = new BMap.Point(data.data[i].xG, data.data[i].yG);
                 var marker = new BMap.Marker(point, {icon: icon});
                 var oldNum=data.data[i].greenSum+data.data[i].yellowSum+data.data[i].redSum;
-                marker.setTitle(data.data[i].info + "："+oldNum);
+                marker.setTitle(data.data[i].info);
 
                 // if(typeof(data.data[i].oldMan)=="undefined")continue;
 
@@ -704,7 +704,7 @@ function getLouMarkers() {
                     {
                         infostr+=olds[j].oldName;
                         //infostr=infostr+":"+olds[j].status+",";
-                        alert(isGreen(olds[j].oid));
+                        //alert(isGreen(olds[j].oid));
                         if(isGreen(olds[j].oid)){
                             infostr=infostr+":"+"<div id='test' style='width:10px;height:10px;background:#00ee00;'></div>";
 

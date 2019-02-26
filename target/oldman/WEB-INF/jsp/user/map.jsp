@@ -101,7 +101,7 @@
       <p id="redNum" style="font-size: 20px">未接受服务老人数量：1</p>
       <p id="allNum" style="font-size: 20px">老人总数：1</p>
     </div>
-    <div id='test' style='width:500px;height:370px;background:#aa00aa;'>
+    <div id='test' style='width:500px;height:570px;background:#aa00aa;'>
       <table id="datagrid2" class="easyui-datagrid" fit="true" url="${path}/data/datagrid" title=""
              toolbar="#toolbar"
              pagination="true"
